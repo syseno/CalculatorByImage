@@ -1,0 +1,85 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace "com.example.calculator_camera"
+    compileSdk rootProject.ext.compileSdkVersion
+
+    flavorDimensions = ["theme", "input"]
+
+    defaultConfig {
+        applicationId "com.example.calculator_camera"
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        debug {
+            debuggable true
+        }
+    }
+
+    productFlavors {
+        red {
+            applicationIdSuffix ".red"
+            versionNameSuffix "-red"
+            setDimension("theme")
+        }
+
+        green {
+            applicationIdSuffix ".green"
+            versionNameSuffix "-green"
+            setDimension("theme")
+        }
+
+        filesystem {
+            applicationIdSuffix ".filesystem"
+            versionNameSuffix "-filesystem"
+            setDimension("input")
+        }
+
+        camera {
+            applicationIdSuffix ".built_in_camera"
+            versionNameSuffix "-built-in-camera"
+            setDimension("input")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation project(':common')
+    implementation project(':calculator')
+
+    implementation appDependencies.gmsVision
+    implementation appDependencies.firebaseCore
+    implementation appDependencies.mlVision
+    implementation appDependencies.cameraCore
+
+}
+apply plugin: 'com.google.gms.google-services'
